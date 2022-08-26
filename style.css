@@ -1,0 +1,114 @@
+/* CSS to simulate a multi-page site on a single page */
+
+/* Hide all sections by default,
+   including the last child if an
+   older sibling is the :target
+*/
+section,
+section:target ~ :last-child {
+  position: absolute;
+  width: 100%; /* position absolute implies width: fit-content */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+/* Show the last-child section, but only if an older sibling is
+   not the :target, in which case, show only the older sibling
+*/
+section:last-child,
+section:target {
+  opacity: 1;
+}
+
+/*
+   QUIRK
+   section:last-child is immediately opacity: 1
+   section:target starts with opacity: 0
+
+   If the visitor opens the page directly at
+   localhost:5500#two (for example), then
+   section#one will appear full opaque and fade
+   out is section#two fades in. This would be a
+   sub-optimal experience.
+
+   WORKAROUND
+   Create a section#splash which will cover the
+   whole screen, and start fully opaque
+   when the page is first loaded.
+   Use a keyframes animation to fade it out
+   _after_ :target has had time to fade in.
+*/
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  67% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#splash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  opacity: 0;
+  background-color: #000;
+
+  pointer-events: none;    /* Allow clicks to reach the menu   */
+  animation: fadeOut 1.5s; /* Opaque for 1s, fade out for 0.5s */
+}
+
+
+
+/* The following CSS is purely cosmetic */
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-size: 6vmin;
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #999;
+}
+
+li {
+  flex: 1;
+  padding: none;
+}
+
+a {
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+  background-color: #666;
+  color: #000;
+}
+
+a:hover {
+  background-color: #fff;
+}
+
+p {
+  text-align: left;
+}
+
+span {
+  font-style: italic;
+  color: #999;
+}
