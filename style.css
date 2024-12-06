@@ -22,19 +22,19 @@ section:target {
 
 /*
    QUIRK
-   section:last-child is immediately opacity: 1
-   section:target starts with opacity: 0
+   section:last-child is immediately `opacity: 1`
+   section:target starts with `opacity: 0`
 
    If the visitor opens the page directly at
    localhost:5500#two (for example), then
    section#one will appear full opaque and fade
-   out is section#two fades in. This would be a
+   out as section#two fades in. This would be a
    sub-optimal experience.
 
    WORKAROUND
    Create a section#splash which will cover the
-   whole screen, and start fully opaque
-   when the page is first loaded.
+   whole screen, and which will start fully
+   opaque when the page is first loaded.
    Use a keyframes animation to fade it out
    _after_ :target has had time to fade in.
 */
